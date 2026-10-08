@@ -34,13 +34,22 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-white">
-      <header className="flex items-center justify-between border-b px-6 py-4">
-        <h1 className="text-2xl font-bold">Notes</h1>
-        <ThemeToggle />
-      </header>
+    <div className="min-h-screen bg-gray-50 text-gray-900 transition-colors dark:bg-gray-950 dark:text-gray-100">
+  <header className="border-b border-gray-200 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
+    <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <div>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
+          Notes
+        </h1>
+        <p className="hidden text-sm text-gray-500 dark:text-gray-400 sm:block">
+          Capture your ideas and keep them organized.
+        </p>
+      </div>
 
-      <main className="mx-auto max-w-6xl space-y-6 px-4 py-6">
+      <ThemeToggle />
+    </div>
+  </header>
+      <main className="mx-auto max-w-6xl space-y-8 px-4 py-6 sm:px-6 sm:py-8">
         <ViewTabs
           view={view}
           onViewChange={setView}
@@ -73,13 +82,28 @@ function App() {
             </p>
           </div>
         ) : (
-          <NoteList
-            notes={visibleNotes}
-            onPin={togglePin}
-            onArchive={toggleArchive}
-            onEdit={setEditingId}
-            onDelete={removeNote}
-          />
+          <div className="space-y-4">
+  <div className="flex items-center justify-between">
+    <h2 className="text-lg font-semibold">
+      {view === "all" && "Your notes"}
+      {view === "pinned" && "Pinned notes"}
+      {view === "archived" && "Archived notes"}
+    </h2>
+
+    <span className="text-sm text-gray-500 dark:text-gray-400">
+      {visibleNotes.length}{" "}
+      {visibleNotes.length === 1 ? "note" : "notes"}
+    </span>
+  </div>
+
+  <NoteList
+    notes={visibleNotes}
+    onPin={togglePin}
+    onArchive={toggleArchive}
+    onEdit={setEditingId}
+    onDelete={removeNote}
+  />
+</div>
         )}
       </main>
     </div>
